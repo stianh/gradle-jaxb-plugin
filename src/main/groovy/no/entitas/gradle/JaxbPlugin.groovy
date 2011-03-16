@@ -28,10 +28,11 @@ class JaxbPlugin implements Plugin<Project> {
         }
 
         project.tasks.compileGeneratedSourcesJava.dependsOn jaxbTask
-				project.tasks.jar{
-					from project.sourceSets.main.classes
-					from project.sourceSets.generatedSources.classes
-				}
+
+        project.tasks.jar {
+            from project.sourceSets.main.classes
+            from project.sourceSets.generatedSources.classes
+        }
     }
 
     def addSourceSet(Project project) {
