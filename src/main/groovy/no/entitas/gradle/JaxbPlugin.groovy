@@ -16,6 +16,8 @@ class JaxbPlugin implements Plugin<Project> {
         Task createJaxbDir = project.task('createDirs') << {
             new File(project.projectDir,project.convention.plugins.jaxb.destDir).mkdirs()
         }
+		
+		createJaxbDir.outputs.upToDateWhen{new File(project.projectDir,project.convention.plugins.jaxb.destDir).exists()}
 
         Task jaxbTask = project.task('jaxb', dependsOn: createJaxbDir) {
 			inputs.dir {new File(project.convention.plugins.jaxb.schemaDir)}
