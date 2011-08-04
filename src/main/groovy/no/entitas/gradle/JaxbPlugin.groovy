@@ -14,7 +14,7 @@ class JaxbPlugin implements Plugin<Project> {
         }
         addSourceSet(project)
         Task createJaxbDir = project.task('createDirs') << {
-            new File(project.convention.plugins.jaxb.destDir).mkdirs()
+            new File(project.projectDir,project.convention.plugins.jaxb.destDir).mkdirs()
         }
 
         Task jaxbTask = project.task('jaxb', dependsOn: createJaxbDir) {
