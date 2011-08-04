@@ -18,6 +18,8 @@ class JaxbPlugin implements Plugin<Project> {
         }
 
         Task jaxbTask = project.task('jaxb', dependsOn: createJaxbDir) {
+			inputs.dir {new File(project.convention.plugins.jaxb.schemaDir)}
+			outputs.dir {new File(project.projectDir,project.convention.plugins.jaxb.destDir)}
             ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: project.configurations.jaxb.asPath)
             actions = [
                     {
