@@ -34,5 +34,4 @@ jaxb{
 Known issues and limitations:  
 ----------------------------
 * The plugin is only tested in some very simple cases.   
-* There are several XJC ant task configurations that are not exposed through the plugin at the moment.  
-* The plugin is not integrated with gradle's incremental build support.
+* There are several XJC ant task configurations that are not exposed through the plugin at the moment.
