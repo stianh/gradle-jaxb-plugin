@@ -23,8 +23,9 @@ Usage:
         classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0'
       }
     }
-    //Configures the plugin
-    jaxb{
+
+    // Configuration of the plugin
+    jaxb {
       destDir = 'build/generated-src' // This is the default directory for generated sources
       genPackage =  'no.entitas.jaxb'
       schemaDir = 'src/main/resources/no/entitas/schema'

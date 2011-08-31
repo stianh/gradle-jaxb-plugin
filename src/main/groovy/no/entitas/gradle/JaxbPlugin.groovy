@@ -1,9 +1,9 @@
 package no.entitas.gradle
 
-import org.gradle.api.Project
-import org.gradle.api.Plugin
-import org.gradle.api.Task
 import org.gradle.api.Action
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.api.Task
 
 class JaxbPlugin implements Plugin<Project> {
     def void apply(Project project) {
@@ -14,14 +14,14 @@ class JaxbPlugin implements Plugin<Project> {
         }
         addSourceSet(project)
         Task createJaxbDir = project.task('createDirs') << {
-            new File(project.projectDir,project.convention.plugins.jaxb.destDir).mkdirs()
+            new File(project.projectDir, project.convention.plugins.jaxb.destDir).mkdirs()
         }
-		
-		createJaxbDir.outputs.upToDateWhen{new File(project.projectDir,project.convention.plugins.jaxb.destDir).exists()}
+
+        createJaxbDir.outputs.upToDateWhen {new File(project.projectDir, project.convention.plugins.jaxb.destDir).exists()}
 
         Task jaxbTask = project.task('jaxb', dependsOn: createJaxbDir) {
-			inputs.dir {new File(project.convention.plugins.jaxb.schemaDir)}
-			outputs.dir {new File(project.projectDir,project.convention.plugins.jaxb.destDir)}
+            inputs.dir {new File(project.convention.plugins.jaxb.schemaDir)}
+            outputs.dir {new File(project.projectDir, project.convention.plugins.jaxb.destDir)}
             ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: project.configurations.jaxb.asPath)
             actions = [
                     {
