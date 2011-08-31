@@ -25,7 +25,7 @@ Usage:
     }
     //Configures the plugin
     jaxb{
-      String destDir = 'build/generated-src' //This is the default.
+      destDir = 'build/generated-src' // This is the default directory for generated sources
       genPackage =  'no.entitas.jaxb'
       schemaDir = 'src/main/resources/no/entitas/schema'
       includes = 'some.xsd'
