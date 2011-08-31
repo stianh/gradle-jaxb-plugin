@@ -10,26 +10,23 @@ run: gradle clean install
 Usage:  
 ------
 
-<pre><code>
-apply plugin: 'jaxb'
+    apply plugin: 'jaxb'
 
-buildscript {
-  repositories {
-    mavenRepo urls: ['file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath]
-  }
-  dependencies {
-    classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0-SNAPSHOT'
-  }
-}
-//Configures the plugin 
-jaxb{
-  String destDir = 'build/generated-src' //This is the default. 
-  genPackage =  'no.entitas.jaxb'
-  schemaDir = 'src/main/resources/no/entitas/schema'
-  includes = 'some.xsd'
-}
-
-</code></pre>  
+    buildscript {
+      repositories {
+        mavenRepo urls: ['file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath]
+      }
+      dependencies {
+        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0-SNAPSHOT'
+      }
+    }
+    //Configures the plugin
+    jaxb{
+      String destDir = 'build/generated-src' //This is the default.
+      genPackage =  'no.entitas.jaxb'
+      schemaDir = 'src/main/resources/no/entitas/schema'
+      includes = 'some.xsd'
+    }
 
 Known issues and limitations:  
 ----------------------------
