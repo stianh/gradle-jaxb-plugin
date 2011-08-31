@@ -20,7 +20,7 @@ Usage:
         mavenLocal()
       }
       dependencies {
-        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0-SNAPSHOT'
+        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0'
       }
     }
     //Configures the plugin
