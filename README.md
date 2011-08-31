@@ -5,8 +5,10 @@ This is a Gradle plugin for generating JAXB classes with XJC out of the given sc
 
 Installation 
 ------------
-Clone the repo  
-run: gradle clean install  
+1. Clone the repo
+2. Run the following command:
+
+        gradle install
 
 Usage:  
 ------
