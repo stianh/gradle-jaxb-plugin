@@ -1,6 +1,7 @@
 Gradle JAXB plugin
 ==================
-Gradle plugin for generating jaxb classes.  
+
+This is a Gradle plugin for generating JAXB classes with XJC out of the given schemas.
 
 Installation 
 ------------
