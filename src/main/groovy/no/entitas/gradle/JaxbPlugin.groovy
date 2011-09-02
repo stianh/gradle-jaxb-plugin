@@ -7,6 +7,7 @@ import org.gradle.api.Task
 
 class JaxbPlugin implements Plugin<Project> {
     def void apply(Project project) {
+        project.apply(plugin: 'java')
         project.convention.plugins.jaxb = new JaxbPluginConvention()
         project.configurations {jaxb}
         project.dependencies {
