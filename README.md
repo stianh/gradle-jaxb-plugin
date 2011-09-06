@@ -29,7 +29,7 @@ Usage:
       destDir = 'build/generated-src' // This is the default directory for generated sources
       genPackage =  'no.entitas.jaxb'
       schemaDir = 'src/main/resources/no/entitas/schema'
-      includes = 'some.xsd'
+      includes = 'some.xsd' // This accepts Ant-style file patterns, like **/*.xsd
     }
 
 Known issues and limitations:  
