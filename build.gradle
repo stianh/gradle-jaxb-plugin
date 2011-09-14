@@ -2,6 +2,8 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'sign'
+
 
 group = 'no.entitas'
 version = '1.1-SNAPSHOT'
@@ -12,13 +14,104 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    groovy "org.codehaus.groovy:groovy-all:1.7.4"
+    groovy "org.codehaus.groovy:groovy-all:1.8.0"
 }
 
-def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: localMavenRepo)
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'de.huxhorn.gradle:de.huxhorn.gradle.pgp-plugin:0.0.3'
     }
 }
 
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn:classes) {
+     classifier = 'sources'
+     from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+     classifier = 'javadoc'
+     from javadoc.destinationDir
+}
+
+// add javadoc/source jar tasks as artifacts
+artifacts {
+     archives sourcesJar
+     archives javadocJar
+}
+
+
+uploadArchives {
+  repositories.mavenDeployer {
+    configuration = configurations.archives
+
+    repository(url: "http://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+      authentication(userName: sonatypeUsername, password: sonatypePassword)
+    }
+
+    pom.project {
+      name 'Gradle JAXB plugin'
+      packaging 'jar'
+      description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
+      url 'http://github.com/stianh/gradle-jaxb-plugin'
+      inceptionYear '2011'
+
+      scm {
+        url 'scm:git:file:///test'
+        connection 'scm:git:file:///test'
+      }
+
+      licenses {
+        license {
+          name 'BSD License'
+          comments """
+                /**
+                Copyright (c) 2010, hmm??
+                All rights reserved.
+
+                Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+                following conditions are met:
+
+                1.) Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+                disclaimer.
+                2.) Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+                disclaimer in the documentation and/or other materials provided with the distribution.
+                3.) Neither the name of Andre Steingress nor the names of its contributors may be used to endorse or
+                promote products derived from this software without specific prior written permission.
+
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+                INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+                DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+                SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+                SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+                WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+                USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                **/
+          """
+          distribution 'repo'
+        }
+      }
+
+      developers {
+        developer {
+          id 'stianh'
+          name 'Stian Hegglund'
+          email 'hmm?'
+          url 'hmm?'
+          // see: http://www.mail-archive.com/user@gradle.codehaus.org/msg05368.html
+          // organization 'Andre Steingress'
+          // organizationUrl 'http://www.andresteingress.com'
+          roles{
+            role 'Developer'
+          }
+          timezone '+1'
+        }
+      }
+    }
+  }
+}
