@@ -45,6 +45,11 @@ artifacts {
      archives javadocJar
 }
 
+/*
+pgp {
+    secretKeyRingFile = new File("${System.properties['user.home']}/.gnupg/secring.gpg")
+}
+*/
 
 uploadArchives {
   repositories.mavenDeployer {
