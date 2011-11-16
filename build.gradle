@@ -50,7 +50,7 @@ uploadArchives {
   repositories.mavenDeployer {
     configuration = configurations.archives
 
-    repository(url: "http://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+    repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
       authentication(userName: sonatypeUsername, password: sonatypePassword)
     }
 
