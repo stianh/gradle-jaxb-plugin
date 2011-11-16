@@ -62,8 +62,9 @@ uploadArchives {
       inceptionYear '2011'
 
       scm {
-        url 'scm:git:file:///test'
-        connection 'scm:git:file:///test'
+        developerConnection 'git@github.com:stianh/gradle-jaxb-plugin.git'
+        connection 'git://github.com/stianh/gradle-jaxb-plugin.git'
+        url 'https://github.com/stianh/gradle-jaxb-plugin'
       }
 
       licenses {
