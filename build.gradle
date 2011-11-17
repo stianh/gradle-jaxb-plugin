@@ -12,7 +12,10 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    groovy "org.codehaus.groovy:groovy-all:1.7.4"
+
+    testCompile "org.spockframework:spock-core:0.5-groovy-1.8"
+
+    groovy "org.codehaus.groovy:groovy-all:1.8.4"
 }
 
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath

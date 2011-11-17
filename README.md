@@ -15,22 +15,22 @@ Usage:
 
     apply plugin: 'jaxb'
 
+    dependencies {
+      jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
+    }
+
     buildscript {
       repositories {
         mavenLocal()
       }
       dependencies {
-        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.0'
+        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.1-SNAPSHOT'
       }
     }
 
-    // Configuration of the plugin
-    jaxb {
-      destDir = 'build/generated-src' // This is the default directory for generated sources
-      genPackage =  'no.entitas.jaxb'
-      schemaDir = 'src/main/resources/no/entitas/schema'
-      includes = 'some.xsd' // This accepts Ant-style file patterns, like **/*.xsd
-    }
+There is no configuration possible at the moment other than specifying the classpath used when generating and compiling
+the generated code. Which schema files to include and output directory are using sensible defaults, while the package
+to use is taken from the jaxb:package instruction in the schema files.
 
 Known issues and limitations:  
 ----------------------------
