@@ -37,8 +37,6 @@ signing {
 
 uploadArchives {
     repositories.mavenDeployer {
-        configuration = configurations.archives
-
         snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
             authentication(userName: sonatypeUsername, password: sonatypePassword)
         }
