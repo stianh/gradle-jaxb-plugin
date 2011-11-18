@@ -91,7 +91,9 @@ installer.beforeDeployment {
 uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
+
         pom fixedProject
+        uniqueVersion = false
 
         snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
             authentication(userName: sonatypeUsername, password: sonatypePassword)
