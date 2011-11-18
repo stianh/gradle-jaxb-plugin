@@ -69,17 +69,13 @@ uploadArchives {
 
       developers {
         developer {
-          id 'stianh'
-          name 'Stian Hegglund'
-          email 'hmm?'
-          url 'hmm?'
-          // see: http://www.mail-archive.com/user@gradle.codehaus.org/msg05368.html
-          // organization 'Andre Steingress'
-          // organizationUrl 'http://www.andresteingress.com'
-          roles{
-            role 'Developer'
-          }
-          timezone '+1'
+            id 'stianh'
+            name 'Stian Hegglund'
+            email 'stian.hegglund@gmail.com'
+            roles {
+                role 'Developer'
+            }
+            timezone '+1'
         }
       }
     }
