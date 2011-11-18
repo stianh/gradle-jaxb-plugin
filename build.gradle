@@ -82,11 +82,12 @@ fixedProject = {
     }
 }
 
-installer = install.repositories.mavenInstaller
-installer.pom fixedProject
+install.repositories.mavenInstaller {
+    pom fixedProject
 
-installer.beforeDeployment {
-    MavenDeployment deployment -> signPom(deployment)
+    beforeDeployment {
+        MavenDeployment deployment -> signPom(deployment)
+    }
 }
 
 uploadArchives {
