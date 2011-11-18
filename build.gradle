@@ -39,7 +39,7 @@ signing {
 
 defaultProject = {
     name 'Gradle JAXB plugin'
-    packaging 'jar'
+    // packaging 'jar' (Packaging is set later through direct modification of the xml)
     description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
     url 'http://github.com/stianh/gradle-jaxb-plugin'
     inceptionYear '2011'
@@ -71,8 +71,18 @@ defaultProject = {
     }
 }
 
+fixedProject = {
+    project defaultProject
+    withXml {
+        def project = it.asNode()
+        project.version[0] + {
+            packaging 'jar'
+        }
+    }
+}
+
 installer = install.repositories.mavenInstaller
-installer.pom.project defaultProject
+installer.pom fixedProject
 
 installer.beforeDeployment {
     MavenDeployment deployment -> signPom(deployment)
@@ -81,7 +91,7 @@ installer.beforeDeployment {
 uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
-        pom.project defaultProject
+        pom fixedProject
 
         snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
             authentication(userName: sonatypeUsername, password: sonatypePassword)
