@@ -5,7 +5,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'no.entitas.gradle'
-version = '1.2'
+version = '1.3-SNAPSHOT'
 
 repositories {
     mavenCentral()
