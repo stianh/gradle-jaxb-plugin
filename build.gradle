@@ -2,7 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-apply plugin: 'sign'
+apply plugin: 'signing'
 
 
 group = 'no.entitas'
@@ -15,17 +15,6 @@ repositories {
 dependencies {
     compile gradleApi()
     groovy "org.codehaus.groovy:groovy-all:1.8.0"
-}
-
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'de.huxhorn.gradle:de.huxhorn.gradle.pgp-plugin:0.0.3'
-    }
 }
 
 // custom tasks for creating source/javadoc jars
@@ -45,11 +34,9 @@ artifacts {
      archives javadocJar
 }
 
-/*
-pgp {
-    secretKeyRingFile = new File("${System.properties['user.home']}/.gnupg/secring.gpg")
+signing {
+    sign configurations.archives
 }
-*/
 
 uploadArchives {
   repositories.mavenDeployer {
