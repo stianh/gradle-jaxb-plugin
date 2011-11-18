@@ -39,11 +39,15 @@ uploadArchives {
   repositories.mavenDeployer {
     configuration = configurations.archives
 
-    repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-      authentication(userName: sonatypeUsername, password: sonatypePassword)
-    }
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+          authentication(userName: sonatypeUsername, password: sonatypePassword)
+      }
 
-    pom.project {
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+          authentication(userName: sonatypeUsername, password: sonatypePassword)
+      }
+
+      pom.project {
       name 'Gradle JAXB plugin'
       packaging 'jar'
       description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
