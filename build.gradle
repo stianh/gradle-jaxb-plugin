@@ -74,6 +74,10 @@ defaultProject = {
 installer = install.repositories.mavenInstaller
 installer.pom.project defaultProject
 
+installer.beforeDeployment {
+    MavenDeployment deployment -> signPom(deployment)
+}
+
 uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
