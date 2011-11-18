@@ -30,7 +30,8 @@ configure(project(':api')) {
     dependencies {
         jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
         jaxb project(':util')
-}   }
+    }
+}
 
 configure(project(':service')) {
     apply plugin: 'java'
@@ -42,6 +43,6 @@ configure(project(':service')) {
 
 buildscript {
     dependencies {
-        classpath fileTree(dir: '../../build/libs', include: '*.jar')
+        classpath fileTree(dir: '../../build/libs', include: '*.jar', excludes: ['*javadoc.jar', '*sources.jar'])
     }
 }
