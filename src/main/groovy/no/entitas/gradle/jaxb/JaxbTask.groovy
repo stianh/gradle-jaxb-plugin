@@ -30,7 +30,7 @@ public class JaxbTask extends SourceTask {
     /**
      * The classpath containing the Ant XJC task implementation.
      * <p>
-     * This is set in <code>JaxbPlugin</code> through its convention mapping.
+     * This is implemented dynamically from the task's convention mapping setup in <code>JaxbPlugin</code>
      *
      * @see JaxbPlugin
      */
