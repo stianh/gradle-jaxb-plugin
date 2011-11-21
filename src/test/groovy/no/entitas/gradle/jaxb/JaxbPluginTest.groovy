@@ -45,6 +45,14 @@ class JaxbPluginTest extends Specification {
         custom.resources.srcDirs == [project.file('src/custom/jaxb'), project.file('src/custom/resources')] as Set
     }
     
+    def "should add configuration named jaxb"() {
+        when:
+        plugin.apply(project)
+        
+        then:
+        project.configurations.jaxb
+    }
+    
     def "should add JAXB generate task for each source set"() {
         when:
         plugin.apply(project)
