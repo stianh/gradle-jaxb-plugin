@@ -15,4 +15,4 @@
 */
 include 'util'
 include 'api'
-include 'service'
+include 'client'

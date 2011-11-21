@@ -33,7 +33,7 @@ configure(project(':api')) {
     }
 }
 
-configure(project(':service')) {
+configure(project(':client')) {
     apply plugin: 'java'
 
     dependencies {
