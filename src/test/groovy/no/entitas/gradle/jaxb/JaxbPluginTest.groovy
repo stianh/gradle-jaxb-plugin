@@ -23,7 +23,7 @@ class JaxbPluginTest extends Specification {
     private final Project project = ProjectBuilder.builder().build()
     private final JaxbPlugin plugin = new JaxbPlugin()
 
-    def "adds JAXB properties to each source set"() {
+    def "should add JAXB dir to each source set"() {
         when:
         plugin.apply(project)
 
@@ -42,7 +42,7 @@ class JaxbPluginTest extends Specification {
         custom.jaxb.srcDirs == [project.file('src/custom/jaxb')] as Set
     }
     
-    def "adds task for each source set"() {
+    def "should add JAXB generate task for each source set"() {
         when:
         plugin.apply(project)
 
