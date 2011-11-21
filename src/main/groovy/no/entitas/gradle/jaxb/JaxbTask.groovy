@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.entitas.gradle.jaxb;
-
+package no.entitas.gradle.jaxb
 
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * Generates XML Binding classes from a set of XML Schemas.
@@ -30,8 +27,6 @@ import org.slf4j.LoggerFactory
  * @author Stig Kleppe-Jørgensen
  */
 public class JaxbTask extends SourceTask {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JaxbTask.class);
-
     /**
      * The classpath containing the Ant XJC task implementation.
      * <p>
