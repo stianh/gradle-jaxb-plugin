@@ -23,16 +23,18 @@ class JaxbPluginTest extends Specification {
     private final Project project = ProjectBuilder.builder().build()
     private final JaxbPlugin plugin = new JaxbPlugin()
 
-    def "adds JAXB properties to each source set"() {
+    def "should add JAXB dir to each source set"() {
         when:
         plugin.apply(project)
 
         then:
         def main = project.sourceSets.main
         main.jaxb.srcDirs == [project.file('src/main/jaxb')] as Set
+        main.resources.srcDirs == [project.file('src/main/jaxb'), project.file('src/main/resources')] as Set
 
         def test = project.sourceSets.test
         test.jaxb.srcDirs == [project.file('src/test/jaxb')] as Set
+        test.resources.srcDirs == [project.file('src/test/jaxb'), project.file('src/test/resources')] as Set
 
         when:
         project.sourceSets.add('custom')
@@ -40,9 +42,18 @@ class JaxbPluginTest extends Specification {
         then:
         def custom = project.sourceSets.custom
         custom.jaxb.srcDirs == [project.file('src/custom/jaxb')] as Set
+        custom.resources.srcDirs == [project.file('src/custom/jaxb'), project.file('src/custom/resources')] as Set
     }
     
-    def "adds task for each source set"() {
+    def "should add configuration named jaxb"() {
+        when:
+        plugin.apply(project)
+        
+        then:
+        project.configurations.jaxb
+    }
+    
+    def "should add JAXB generate task for each source set"() {
         when:
         plugin.apply(project)
 
