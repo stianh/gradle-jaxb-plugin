@@ -3,14 +3,7 @@ Gradle JAXB plugin
 
 This is a Gradle plugin for generating JAXB classes with XJC from the given schemas.
 
-Installation 
-------------
-1. Clone the repo
-2. Run the following command:
-
-        gradle install
-
-Usage:  
+Usage:
 ------
 
     apply plugin: 'jaxb'
@@ -21,10 +14,10 @@ Usage:
 
     buildscript {
       repositories {
-        mavenLocal()
+        mavenCentral()
       }
       dependencies {
-        classpath group: 'no.entitas', name: 'gradle-jaxb-plugin', version: '1.1-SNAPSHOT'
+        classpath 'no.entitas.gradle:gradle-jaxb-plugin:1.3'
       }
     }
 
