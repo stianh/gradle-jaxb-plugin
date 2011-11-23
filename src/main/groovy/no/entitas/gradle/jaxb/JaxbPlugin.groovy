@@ -46,13 +46,13 @@ public class JaxbPlugin implements Plugin<Project> {
     }
 
     private setupJaxbFor(SourceSet sourceSet, Project project) {
-        insertJaxbInto(sourceSet, project)
+        insertJaxbSourceDirectorySetInto(sourceSet, project)
 
         Task jaxb = createJaxbTaskFor(sourceSet, project)
         project.tasks[sourceSet.compileJavaTaskName].dependsOn(jaxb)
     }
 
-    private insertJaxbInto(SourceSet sourceSet, Project project) {
+    private insertJaxbSourceDirectorySetInto(SourceSet sourceSet, Project project) {
         def schemasDir = "src/${sourceSet.name}/jaxb"
         sourceSet.convention.plugins.jaxb = new JaxbSourceDirectory(sourceSet.name, project.fileResolver)
         sourceSet.java { srcDir generatedJavaDirFor(project, sourceSet) }
