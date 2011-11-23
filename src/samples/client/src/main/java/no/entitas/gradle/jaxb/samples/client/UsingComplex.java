@@ -15,7 +15,7 @@
  */
 package no.entitas.gradle.jaxb.samples.client;
 
-import no.entitas.gradle.jaxb.samples.api.Complex;
+import no.entitas.gradle.jaxb.samples.simple.api.Complex;
 
 public abstract class UsingComplex  {
     public abstract Complex getInstance();

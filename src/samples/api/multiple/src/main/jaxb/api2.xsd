@@ -16,18 +16,11 @@
   -->
 <xsd:schema elementFormDefault="qualified" jxb:version="2.1"
             xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-            xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            jxb:extensionBindingPrefixes="xjc">
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<xsd:annotation>
 		<xsd:appinfo>
-				<jxb:globalBindings generateValueClass="true" typesafeEnumMaxMembers="0">
-					<xjc:javaType name="java.util.Calendar"
-                        xmlType="xsd:date"
-                        adapter="no.entitas.gradle.jaxb.samples.util.JaxbCalendarUtil" />
-				</jxb:globalBindings>
       <jxb:schemaBindings>
-        <jxb:package name="no.entitas.gradle.jaxb.samples.api"/>
+        <jxb:package name="no.entitas.gradle.jaxb.samples.multiple.api2"/>
       </jxb:schemaBindings>
     </xsd:appinfo>
 	</xsd:annotation>

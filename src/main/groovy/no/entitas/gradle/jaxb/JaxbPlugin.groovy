@@ -17,6 +17,7 @@ package no.entitas.gradle.jaxb
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
 
@@ -40,25 +41,46 @@ public class JaxbPlugin implements Plugin<Project> {
         }
 
         project.convention.plugins.java.sourceSets.all { SourceSet sourceSet ->
-            def schemasDir = "src/${sourceSet.name}/jaxb"
-            def generatedJavaDir = "${project.buildDir}/generated-src/jaxb/${sourceSet.name}"
-
-            sourceSet.convention.plugins.jaxb = new JaxbSourceDirectory(sourceSet.name, project.fileResolver)
-            sourceSet.java { srcDir generatedJavaDir }
-            sourceSet.jaxb { srcDir schemasDir }
-            sourceSet.resources { srcDir schemasDir }
-
-            def jaxb = project.tasks.add(sourceSet.getTaskName('generate', 'SchemaSource'), JaxbTask)
-            jaxb.description = "Processes the ${sourceSet.name} JAXB schemas."
-            jaxb.outputDirectory = project.file(generatedJavaDir)
-            jaxb.conventionMapping.defaultSource = { sourceSet.jaxb }
-            jaxb.conventionMapping.jaxbClasspath = {
-                def jaxbClassPath = project.configurations.jaxb.copy()
-                jaxbClassPath.transitive = true
-                jaxbClassPath
-            }
-
-            project.tasks[sourceSet.compileJavaTaskName].dependsOn(jaxb)
+            setupJaxbFor(sourceSet, project)
         }
+    }
+
+    private setupJaxbFor(SourceSet sourceSet, Project project) {
+        insertJaxbSourceDirectorySetInto(sourceSet, project)
+
+        Task jaxb = createJaxbTaskFor(sourceSet, project)
+        project.tasks[sourceSet.compileJavaTaskName].dependsOn(jaxb)
+    }
+
+    private insertJaxbSourceDirectorySetInto(SourceSet sourceSet, Project project) {
+        def schemasDir = "src/${sourceSet.name}/jaxb"
+        sourceSet.convention.plugins.jaxb = new JaxbSourceDirectory(sourceSet.name, project.fileResolver)
+        sourceSet.java { srcDir generatedJavaDirFor(project, sourceSet) }
+        sourceSet.jaxb { srcDir schemasDir }
+        sourceSet.resources { srcDir schemasDir }
+    }
+
+    private Task createJaxbTaskFor(SourceSet sourceSet, Project project) {
+        def jaxbTask = project.tasks.add(taskName(sourceSet), JaxbTask)
+
+        jaxbTask.group = 'JAXB'
+        jaxbTask.description = "Processes the ${sourceSet.name} JAXB schemas."
+        jaxbTask.outputDirectory = generatedJavaDirFor(project, sourceSet)
+        jaxbTask.conventionMapping.defaultSource = { sourceSet.jaxb }
+        jaxbTask.conventionMapping.jaxbClasspath = {
+            def jaxbClassPath = project.configurations.jaxb.copy()
+            jaxbClassPath.transitive = true
+            jaxbClassPath
+        }
+
+        jaxbTask
+    }
+
+    private File generatedJavaDirFor(Project project, SourceSet sourceSet) {
+        project.file("${project.buildDir}/generated-src/jaxb/${sourceSet.name}")
+    }
+
+    private String taskName(SourceSet sourceSet) {
+        return sourceSet.getTaskName('generate', 'SchemaSource')
     }
 }

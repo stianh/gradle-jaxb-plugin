@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2011 the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<xsd:schema elementFormDefault="qualified" jxb:version="2.1"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            jxb:extensionBindingPrefixes="xjc">
+	<xsd:annotation>
+		<xsd:appinfo>
+				<jxb:globalBindings generateValueClass="true" typesafeEnumMaxMembers="0">
+					<xjc:javaType name="java.util.Calendar"
+                        xmlType="xsd:date"
+                        adapter="no.entitas.gradle.jaxb.samples.util.JaxbCalendarUtil" />
+				</jxb:globalBindings>
+      <jxb:schemaBindings>
+        <jxb:package name="no.entitas.gradle.jaxb.samples.simple.api"/>
+      </jxb:schemaBindings>
+    </xsd:appinfo>
+	</xsd:annotation>
+	<xsd:complexType name="complex">
+		<xsd:sequence>
+			<xsd:element name="el1">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="name" type="xsd:string" />
+						<xsd:element name="date" type="xsd:date" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="el2">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="name" type="xsd:string" />
+						<xsd:element name="date" type="xsd:date" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
+

@@ -24,7 +24,7 @@ configure(project(':util')) {
     apply plugin: 'java'
 }
 
-configure(project(':api')) {
+configure(project(':simple')) {
     apply plugin: 'jaxb'
 
     dependencies {
@@ -37,7 +37,7 @@ configure(project(':client')) {
     apply plugin: 'java'
 
     dependencies {
-        compile project(':api')
+        compile project(':simple')
     }
 }
 
