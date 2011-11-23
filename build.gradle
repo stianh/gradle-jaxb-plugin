@@ -67,6 +67,15 @@ defaultProject = {
             }
             timezone '+1'
         }
+        developer {
+            id 'stigkj'
+            name 'Stig Kleppe-Jørgensen'
+            email 'from.gradle-jaxb@nisgits.net'
+            roles {
+                role 'Developer'
+            }
+            timezone '+1'
+        }
     }
 }
 
