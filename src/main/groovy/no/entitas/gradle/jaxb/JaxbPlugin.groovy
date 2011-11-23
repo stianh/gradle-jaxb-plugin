@@ -61,7 +61,7 @@ public class JaxbPlugin implements Plugin<Project> {
     }
 
     private Task createJaxbTaskFor(SourceSet sourceSet, Project project) {
-        def jaxbTask = project.tasks.add(sourceSet.getTaskName('generate', 'SchemaSource'), JaxbTask)
+        def jaxbTask = project.tasks.add(taskName(sourceSet), JaxbTask)
 
         jaxbTask.group = 'JAXB'
         jaxbTask.description = "Processes the ${sourceSet.name} JAXB schemas."
@@ -78,5 +78,9 @@ public class JaxbPlugin implements Plugin<Project> {
 
     private File generatedJavaDirFor(Project project, SourceSet sourceSet) {
         project.file("${project.buildDir}/generated-src/jaxb/${sourceSet.name}")
+    }
+
+    private String taskName(SourceSet sourceSet) {
+        return sourceSet.getTaskName('generate', 'SchemaSource')
     }
 }
