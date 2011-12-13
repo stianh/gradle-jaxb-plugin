@@ -2,3 +2,4 @@
 .gradle/
 .project
 .settings/
+/build/
