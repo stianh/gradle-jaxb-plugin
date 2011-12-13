@@ -8,6 +8,9 @@ apply plugin: 'eclipse'
 group = 'no.entitas.gradle'
 version = '1.4'
 
+if (!project.hasProperty("sonatypeUsername")) sonatypeUsername = ""
+if (!project.hasProperty("sonatypePassword")) sonatypePassword = ""
+
 repositories {
     mavenCentral()
 }
