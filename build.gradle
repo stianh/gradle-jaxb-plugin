@@ -5,7 +5,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'no.entitas.gradle'
-version = '1.4'
+version = '1.5-SNAPSHOT'
 
 if (!project.hasProperty("sonatypeUsername")) sonatypeUsername = ""
 if (!project.hasProperty("sonatypePassword")) sonatypePassword = ""
