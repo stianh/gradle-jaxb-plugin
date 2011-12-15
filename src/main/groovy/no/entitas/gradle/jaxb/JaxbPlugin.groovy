@@ -55,7 +55,7 @@ public class JaxbPlugin implements Plugin<Project> {
     }
 
     private insertJaxbSourceDirectorySetInto(SourceSet sourceSet, Project project) {
-        def schemasDir = "src/${sourceSet.name}/jaxb"
+        def schemasDir = "src/${sourceSet.name}/xsd"
         sourceSet.convention.plugins.jaxb = new JaxbSourceDirectory(sourceSet.name, project.fileResolver)
         sourceSet.java { srcDir generatedJavaDirFor(project, sourceSet) }
         sourceSet.jaxb { srcDir schemasDir }

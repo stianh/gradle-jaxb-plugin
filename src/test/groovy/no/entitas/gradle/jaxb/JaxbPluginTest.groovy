@@ -29,20 +29,20 @@ class JaxbPluginTest extends Specification {
 
         then:
         def main = project.sourceSets.main
-        main.jaxb.srcDirs == [project.file('src/main/jaxb')] as Set
-        main.resources.srcDirs == [project.file('src/main/jaxb'), project.file('src/main/resources')] as Set
+        main.jaxb.srcDirs == [project.file('src/main/xsd')] as Set
+        main.resources.srcDirs == [project.file('src/main/xsd'), project.file('src/main/resources')] as Set
 
         def test = project.sourceSets.test
-        test.jaxb.srcDirs == [project.file('src/test/jaxb')] as Set
-        test.resources.srcDirs == [project.file('src/test/jaxb'), project.file('src/test/resources')] as Set
+        test.jaxb.srcDirs == [project.file('src/test/xsd')] as Set
+        test.resources.srcDirs == [project.file('src/test/xsd'), project.file('src/test/resources')] as Set
 
         when:
         project.sourceSets.add('custom')
 
         then:
         def custom = project.sourceSets.custom
-        custom.jaxb.srcDirs == [project.file('src/custom/jaxb')] as Set
-        custom.resources.srcDirs == [project.file('src/custom/jaxb'), project.file('src/custom/resources')] as Set
+        custom.jaxb.srcDirs == [project.file('src/custom/xsd')] as Set
+        custom.resources.srcDirs == [project.file('src/custom/xsd'), project.file('src/custom/resources')] as Set
     }
     
     def "should add configuration named jaxb"() {

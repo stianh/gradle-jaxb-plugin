@@ -27,7 +27,7 @@ schema includes and the output directory sensible defaults are used:
 
 * Includes for schemas:
 
-        src/<source set>/jaxb/**/*.xsd
+        src/<source set>/xsd/**/*.xsd
 
 * Output directory:
 
@@ -58,7 +58,7 @@ Not many configuration options exists at the moment. You can configure
             }
         }
 
-For a quite advanced example, consider a project having 2 schemas (`Schema1.xsd` and `Schema2.xsd`) in `src/main/jaxb`
+For a quite advanced example, consider a project having 2 schemas (`Schema1.xsd` and `Schema2.xsd`) in `src/main/xsd`
 generated into 2 different java packages. As the xjc compiler does not support generating into 2 different java packages
 in a single run, these 2 schemas must be included from 2 different source sets (the xjc compiler is run once for each
 source set):
@@ -72,7 +72,7 @@ source set):
         schema2 {
             output.classesDir(sourceSets.main.output.classesDir)
             jaxb {
-                srcDir 'src/main/jaxb'
+                srcDir 'src/main/xsd'
                 exclude '**/Schema2.xsd'
             }
         }
@@ -83,8 +83,8 @@ source set):
 This will create 2 directories for the generated code, `<build dir>/generated-src/jaxb/main` and
 `<build dir>/generated-src/jaxb/schema2`.
 
-The source directory for `schema2` would normally be `src/schema2/jaxb`, but is here changed to the actual directory
-`src/main/jaxb`.
+The source directory for `schema2` would normally be `src/schema2/xsd`, but is here changed to the actual directory
+`src/main/xsd`.
 
 The compiled output from the `schema2` source set is redirected to the directory for the compiled output from the
 `main` source set. This makes it easier to setup the build workflow to get the `schema2` classes into the generated jar.
