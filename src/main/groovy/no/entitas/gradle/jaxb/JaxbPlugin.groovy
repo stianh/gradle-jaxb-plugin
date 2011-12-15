@@ -27,6 +27,8 @@ import org.gradle.api.tasks.SourceSet
  * @author Stig Kleppe-Jørgensen
  */
 public class JaxbPlugin implements Plugin<Project> {
+    private static final String GENERATE_GROUP = 'generate'
+
     void apply(Project project) {
         project.plugins.apply(JavaPlugin)
 
@@ -53,7 +55,7 @@ public class JaxbPlugin implements Plugin<Project> {
     }
 
     private insertJaxbSourceDirectorySetInto(SourceSet sourceSet, Project project) {
-        def schemasDir = "src/${sourceSet.name}/jaxb"
+        def schemasDir = "src/${sourceSet.name}/xsd"
         sourceSet.convention.plugins.jaxb = new JaxbSourceDirectory(sourceSet.name, project.fileResolver)
         sourceSet.java { srcDir generatedJavaDirFor(project, sourceSet) }
         sourceSet.jaxb { srcDir schemasDir }
@@ -63,8 +65,8 @@ public class JaxbPlugin implements Plugin<Project> {
     private Task createJaxbTaskFor(SourceSet sourceSet, Project project) {
         def jaxbTask = project.tasks.add(taskName(sourceSet), JaxbTask)
 
-        jaxbTask.group = 'JAXB'
-        jaxbTask.description = "Processes the ${sourceSet.name} JAXB schemas."
+        jaxbTask.group = GENERATE_GROUP
+        jaxbTask.description = "Generates code from the ${sourceSet.name} JAXB schemas."
         jaxbTask.outputDirectory = generatedJavaDirFor(project, sourceSet)
         jaxbTask.conventionMapping.defaultSource = { sourceSet.jaxb }
         jaxbTask.conventionMapping.jaxbClasspath = {

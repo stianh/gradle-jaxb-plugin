@@ -5,7 +5,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'no.entitas.gradle'
-version = '1.4'
+version = '1.5'
 
 repositories {
     mavenCentral()
@@ -17,23 +17,30 @@ dependencies {
     groovy "org.codehaus.groovy:groovy-all:1.8.0"
 }
 
+task integrationTest(type: GradleBuild, dependsOn: build) {
+    dir = 'src/sample'
+    tasks = ['clean', 'build']
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
-     classifier = 'sources'
-     from sourceSets.main.allSource
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-     classifier = 'javadoc'
-     from javadoc.destinationDir
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
-     archives sourcesJar
-     archives javadocJar
+    archives sourcesJar
+    archives javadocJar
 }
 
-signing {
-    sign configurations.archives
+if (project.hasProperty('sign')) {
+    signing {
+        sign configurations.archives
+    }
 }
 
 defaultProject = {
@@ -92,8 +99,10 @@ fixedProject = {
 install.repositories.mavenInstaller {
     pom fixedProject
 
-    beforeDeployment {
-        MavenDeployment deployment -> signPom(deployment)
+    if (project.hasProperty('sign')) {
+        beforeDeployment {
+            MavenDeployment deployment -> signPom(deployment)
+        }
     }
 }
 
@@ -101,9 +110,14 @@ uploadArchives.repositories.mavenDeployer {
     pom fixedProject
     uniqueVersion = false
 
-    beforeDeployment {
-        MavenDeployment deployment -> signPom(deployment)
+    if (project.hasProperty('sign')) {
+        beforeDeployment {
+            MavenDeployment deployment -> signPom(deployment)
+        }
     }
+
+    if (!project.hasProperty("sonatypeUsername")) sonatypeUsername = ""
+    if (!project.hasProperty("sonatypePassword")) sonatypePassword = ""
 
     snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
         authentication(userName: sonatypeUsername, password: sonatypePassword)
