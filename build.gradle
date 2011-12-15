@@ -37,8 +37,10 @@ artifacts {
      archives javadocJar
 }
 
-signing {
-    sign configurations.archives
+if (project.hasProperty('sign')) {
+    signing {
+        sign configurations.archives
+    }
 }
 
 defaultProject = {
@@ -97,8 +99,10 @@ fixedProject = {
 install.repositories.mavenInstaller {
     pom fixedProject
 
-    beforeDeployment {
-        MavenDeployment deployment -> signPom(deployment)
+    if (project.hasProperty('sign')) {
+        beforeDeployment {
+            MavenDeployment deployment -> signPom(deployment)
+        }
     }
 }
 
@@ -106,8 +110,10 @@ uploadArchives.repositories.mavenDeployer {
     pom fixedProject
     uniqueVersion = false
 
-    beforeDeployment {
-        MavenDeployment deployment -> signPom(deployment)
+    if (project.hasProperty('sign')) {
+        beforeDeployment {
+            MavenDeployment deployment -> signPom(deployment)
+        }
     }
 
     if (!project.hasProperty("sonatypeUsername")) sonatypeUsername = ""
