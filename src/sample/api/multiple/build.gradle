@@ -12,7 +12,7 @@ sourceSets {
     }
     other {
         jaxb {
-            srcDir 'src/main/jaxb'
+            srcDir 'src/main/xsd'
             exclude '**/api2.xsd'
         }
     }
