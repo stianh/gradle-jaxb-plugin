@@ -7,13 +7,13 @@ dependencies {
 sourceSets {
     main {
         jaxb {
-            exclude '**/api1.xsd'
+            exclude '**/multiple1.xsd'
         }
     }
     other {
         jaxb {
             srcDir 'src/main/xsd'
-            exclude '**/api2.xsd'
+            exclude '**/multiple2.xsd'
         }
     }
 }
