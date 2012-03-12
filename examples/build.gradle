@@ -24,7 +24,7 @@ configure(project(':util')) {
     apply plugin: 'java'
 }
 
-configure(project(':simple')) {
+configure(project(':api:simple')) {
     apply plugin: 'jaxb'
 
     dependencies {
@@ -37,12 +37,17 @@ configure(project(':client')) {
     apply plugin: 'java'
 
     dependencies {
-        compile project(':simple')
+        compile project(':api:simple')
     }
 }
 
 buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
     dependencies {
-        classpath fileTree(dir: '../../build/libs', include: '*.jar', excludes: ['*javadoc.jar', '*sources.jar'])
+        classpath 'no.entitas.gradle.jaxb:gradle-jaxb-plugin:1.5'
     }
 }
