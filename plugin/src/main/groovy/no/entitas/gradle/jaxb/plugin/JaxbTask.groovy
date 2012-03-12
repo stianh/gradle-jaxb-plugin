@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package no.entitas.gradle.jaxb
+package no.entitas.gradle.jaxb.plugin
 
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputFiles
@@ -47,9 +47,10 @@ public class JaxbTask extends SourceTask {
 
     @TaskAction
     def generate() {
+        def xjcLibs = jaxbClasspath + project.configurations.antextension
         // TODO maybe have another classpath that holds classes needed when compiling generated code and not include
         // this in the jaxb configuration, which should only hold classpath necessary for running xjc
-        ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: jaxbClasspath.asPath)
+        ant.taskdef(name: 'xjc', classname: 'no.entitas.gradle.jaxb.antextension.XJCTask', classpath: xjcLibs.asPath)
 
         ant.xjc(extension: true, destdir: outputDirectory) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)

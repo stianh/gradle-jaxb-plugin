@@ -19,4 +19,4 @@
  * <p>
  * Based heavily on the Antlr Gradle plugin.
  */
-package no.entitas.gradle.jaxb;
+package no.entitas.gradle.jaxb.plugin;
