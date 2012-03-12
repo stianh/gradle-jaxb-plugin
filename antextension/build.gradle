@@ -1,0 +1,4 @@
+dependencies {
+    compile 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
+    compile 'org.apache.ant:ant:1.8.2'
+}
