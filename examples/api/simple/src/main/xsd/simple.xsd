@@ -14,10 +14,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<xsd:schema elementFormDefault="qualified" jxb:version="2.1"
+<xsd:schema elementFormDefault="unqualified" jxb:version="2.1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://test.com/schema/1/simple"
             jxb:extensionBindingPrefixes="xjc">
 	<xsd:annotation>
 		<xsd:appinfo>
@@ -31,7 +32,7 @@
       </jxb:schemaBindings>
     </xsd:appinfo>
 	</xsd:annotation>
-	<xsd:complexType name="complex">
+	<xsd:complexType name="simpleType">
 		<xsd:sequence>
 			<xsd:element name="el1">
 				<xsd:complexType>

@@ -47,14 +47,20 @@ public class JaxbTask extends SourceTask {
 
     @TaskAction
     def generate() {
+        // TODO how to get to the task's SourceSetOutput which holds the resources dir
+        def metaInfDirectory = "${project.buildDir}/resources/main/META-INF"
+        project.file(metaInfDirectory).mkdirs()
+
         def xjcLibs = jaxbClasspath + project.configurations.antextension
         // TODO maybe have another classpath that holds classes needed when compiling generated code and not include
         // this in the jaxb configuration, which should only hold classpath necessary for running xjc
         ant.taskdef(name: 'xjc', classname: 'no.entitas.gradle.jaxb.antextension.XJCTask', classpath: xjcLibs.asPath)
 
-        ant.xjc(extension: true, destdir: outputDirectory) {
+        ant.xjc(extension: true, catalog: 'src/main/xsd/catalog.cat', destdir: outputDirectory, classpath: project.configurations.compile.asPath) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)
-            arg(value: "-verbose")
+            arg(value: '-verbose')
+            arg(value: '-episode')
+            arg(value: "${metaInfDirectory}/sun-jaxb.episode")
         }
     }
 }

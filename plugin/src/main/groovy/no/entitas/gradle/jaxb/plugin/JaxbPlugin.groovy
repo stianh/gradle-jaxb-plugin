@@ -42,6 +42,18 @@ public class JaxbPlugin implements Plugin<Project> {
             extendsFrom project.configurations.jaxb
         }
 
+        project.configurations.add('antextension') {
+            visible = false
+            transitive = false
+            description = "The internal library containing the XJC Ant task extension."
+        }
+
+        project.dependencies {
+            // FIXME group and version must be resolved dynamically (group is just nice to have, can hard code)
+            // Could update a properties file at deployment with new version
+            antextension "no.entitas.gradle.jaxb:antextension:1.5"
+        }
+
         project.convention.plugins.java.sourceSets.all { SourceSet sourceSet ->
             setupJaxbFor(sourceSet, project)
         }

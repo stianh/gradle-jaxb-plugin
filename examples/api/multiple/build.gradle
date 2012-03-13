@@ -2,6 +2,8 @@ apply plugin: 'jaxb'
 
 dependencies {
     jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
+
+    compile project(':api:simple')
 }
 
 sourceSets {
