@@ -59,7 +59,7 @@ Not many configuration options exists at the moment. You can configure
             }
         }
 
-For a quite advanced example, consider a project having 2 schemas (`Schema1.xsd` and `Schema2.xsd`) in `src/main/xsd`
+For a quite advanced example, consider a project having 2 schemas (`schema1.xsd` and `schema2.xsd`) in `src/main/xsd`
 generated into 2 different java packages. As the xjc compiler does not support generating into 2 different java packages
 in a single run, these 2 schemas must be included from 2 different source sets (the xjc compiler is run once for each
 source set):
@@ -67,31 +67,30 @@ source set):
     sourceSets {
         main {
             jaxb {
-                exclude '**/Schema1.xsd'
+                exclude '**/schema1.xsd'
             }
         }
         schema2 {
-            output.classesDir(sourceSets.main.output.classesDir)
             jaxb {
-                srcDir 'src/main/xsd'
-                exclude '**/Schema2.xsd'
+                srcDir 'src/main/xsd'    (1)
+                exclude '**/schema2.xsd'
             }
         }
     }
 
-    compileJava.dependsOn compileSchema2Java
+    jar {
+        from {
+            sourceSets.schema2.output    (2)
+        }
+    }
 
 This will create 2 directories for the generated code, `<build dir>/generated-src/jaxb/main` and
 `<build dir>/generated-src/jaxb/schema2`.
 
-The source directory for `schema2` would normally be `src/schema2/xsd`, but is here changed to the actual directory
-`src/main/xsd`.
+The source directory for `schema2` would normally be `src/schema2/xsd`, but is changed to the actual directory
+`src/main/xsd` (1).
 
-The compiled output from the `schema2` source set is redirected to the directory for the compiled output from the
-`main` source set. This makes it easier to setup the build workflow to get the `schema2` classes into the generated jar.
-
-Finally the compilation of the generated sources for `schema2` is injected into the workflow, so it is compiled just
-before the regular and generated sources of the `main` source set.
+Finally the compiled output from the `schema2` source set is then included in the jar (2).
 
 Known issues and limitations
 ----------------------------
