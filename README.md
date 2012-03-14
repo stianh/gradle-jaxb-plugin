@@ -9,7 +9,7 @@ Usage:
     apply plugin: 'jaxb'
 
     dependencies {
-      jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
+      jaxb 'com.sun.xml.bind:jaxb-xjc:2.2.4-1'
     }
 
     buildscript {
@@ -40,7 +40,8 @@ Not many configuration options exists at the moment. You can configure
         dependencies {
           // This first line specifies which version of the xjc compiler to use
           jaxb 'com.sun.xml.bind:jaxb-xjc:2.1.12'
-          jaxb '<other dependency which the generated classes need>'
+
+          compile '<other dependency which the generated classes need>'
         }
 
 * the jaxb source directory sets
