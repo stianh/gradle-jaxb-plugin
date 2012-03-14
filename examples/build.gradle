@@ -48,6 +48,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'no.entitas.gradle.jaxb:gradle-jaxb-plugin:1.5'
+        classpath 'no.entitas.gradle.jaxb:gradle-jaxb-plugin:2.0'
     }
 }

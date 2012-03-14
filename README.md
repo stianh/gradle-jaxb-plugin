@@ -17,7 +17,7 @@ Usage:
         mavenCentral()
       }
       dependencies {
-        classpath 'no.entitas.gradle:gradle-jaxb-plugin:1.3'
+        classpath 'no.entitas.gradle.jaxb:gradle-jaxb-plugin:2.0'
       }
     }
 
