@@ -1,0 +1,16 @@
+apply plugin: 'groovy'
+
+archivesBaseName = 'gradle-jaxb-plugin'
+
+configurations {
+    antextension
+}
+
+dependencies {
+    compile gradleApi()
+
+    antextension project(':antextension')
+
+    testCompile 'org.spockframework:spock-core:0.5-groovy-1.8'
+    groovy 'org.codehaus.groovy:groovy-all:1.8.4'
+}
