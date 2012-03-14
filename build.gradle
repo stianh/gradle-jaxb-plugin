@@ -4,7 +4,7 @@ subprojects {
     apply plugin: 'java'
 
     group = 'no.entitas.gradle.jaxb'
-    version = '1.5'
+    version = '2.0'
 
     repositories {
         mavenCentral()
