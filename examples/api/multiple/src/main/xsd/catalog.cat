@@ -1,0 +1,1 @@
+SYSTEM "http://test.com/schema/1/simple/simple.xsd" "classpath:simple.xsd"

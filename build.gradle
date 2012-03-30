@@ -1,129 +1,121 @@
-import org.gradle.api.artifacts.maven.MavenDeployment
+subprojects {
+    apply plugin: 'signing'
+    apply plugin: 'maven'
+    apply plugin: 'java'
 
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'signing'
+    group = 'no.entitas.gradle.jaxb'
+    version = '2.0'
 
-group = 'no.entitas.gradle'
-version = '1.5'
+    repositories {
+        mavenCentral()
+    }
 
-repositories {
-    mavenCentral()
-}
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
 
-dependencies {
-    compile gradleApi()
-    testCompile 'org.spockframework:spock-core:0.5-groovy-1.8'
-    groovy "org.codehaus.groovy:groovy-all:1.8.0"
-}
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+/*
 task integrationTest(type: GradleBuild, dependsOn: build) {
     dir = 'src/sample'
     tasks = ['clean', 'build']
 }
+*/
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-if (project.hasProperty('sign')) {
     signing {
+        required = { gradle.taskGraph.hasTask("uploadArchives") && !version.endsWith("SNAPSHOT") }
         sign configurations.archives
     }
-}
 
-defaultProject = {
-    name 'Gradle JAXB plugin'
-    // packaging 'jar' (Packaging is set later through direct modification of the xml)
-    description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
-    url 'http://github.com/stianh/gradle-jaxb-plugin'
-    inceptionYear '2011'
+    defaultProject = {
+        name 'Gradle JAXB plugin'
+        // packaging 'jar' (Packaging is set later through direct modification of the xml)
+        description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
+        url 'http://github.com/stianh/gradle-jaxb-plugin'
+        inceptionYear '2011'
 
-    scm {
-        developerConnection 'git@github.com:stianh/gradle-jaxb-plugin.git'
-        connection 'git://github.com/stianh/gradle-jaxb-plugin.git'
-        url 'https://github.com/stianh/gradle-jaxb-plugin'
-    }
-
-    licenses {
-        license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'repo'
+        scm {
+            developerConnection 'git@github.com:stianh/gradle-jaxb-plugin.git'
+            connection 'git://github.com/stianh/gradle-jaxb-plugin.git'
+            url 'https://github.com/stianh/gradle-jaxb-plugin'
         }
-    }
 
-    developers {
-        developer {
-            id 'stianh'
-            name 'Stian Hegglund'
-            email 'stian.hegglund@gmail.com'
-            roles {
-                role 'Developer'
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
             }
-            timezone '+1'
         }
-        developer {
-            id 'stigkj'
-            name 'Stig Kleppe-Jørgensen'
-            email 'from.gradle-jaxb@nisgits.net'
-            roles {
-                role 'Developer'
+
+        developers {
+            developer {
+                id 'stianh'
+                name 'Stian Hegglund'
+                email 'stian.hegglund@gmail.com'
+                roles {
+                    role 'Developer'
+                }
+                timezone '+1'
             }
-            timezone '+1'
+            developer {
+                id 'stigkj'
+                name 'Stig Kleppe-Jørgensen'
+                email 'from.gradle-jaxb@nisgits.net'
+                roles {
+                    role 'Developer'
+                }
+                timezone '+1'
+            }
         }
     }
-}
 
-fixedProject = {
-    project defaultProject
-    withXml {
-        def project = it.asNode()
-        project.version[0] + {
-            packaging 'jar'
+// TODO is this really needed? Think Sonatype do not have this as mandatory anymore
+    fixedProject = {
+        project defaultProject
+        withXml {
+            def project = it.asNode()
+            project.version[0] + {
+                packaging 'jar'
+            }
         }
     }
-}
 
-install.repositories.mavenInstaller {
-    pom fixedProject
+    install.repositories.mavenInstaller {
+        pom fixedProject
 
-    if (project.hasProperty('sign')) {
         beforeDeployment {
-            MavenDeployment deployment -> signPom(deployment)
+            deployment -> signPom(deployment)
         }
     }
-}
 
-uploadArchives.repositories.mavenDeployer {
-    pom fixedProject
-    uniqueVersion = false
+    uploadArchives.repositories.mavenDeployer {
+        pom fixedProject
+        uniqueVersion = false
 
-    if (project.hasProperty('sign')) {
         beforeDeployment {
-            MavenDeployment deployment -> signPom(deployment)
+            deployment -> signPom(deployment)
         }
-    }
 
-    if (!project.hasProperty("sonatypeUsername")) sonatypeUsername = ""
-    if (!project.hasProperty("sonatypePassword")) sonatypePassword = ""
+        if (!project.hasProperty('sonatypeUsername')) sonatypeUsername = ''
+        if (!project.hasProperty('sonatypePassword')) sonatypePassword = ''
 
-    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: sonatypeUsername, password: sonatypePassword)
-    }
+        snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+            authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
 
-    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: sonatypeUsername, password: sonatypePassword)
+        repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+            authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
     }
 }

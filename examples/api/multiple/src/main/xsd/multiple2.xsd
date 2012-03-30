@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2011 the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<xsd:schema elementFormDefault="qualified" jxb:version="2.1"
+            xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:simple="http://test.com/schema/1/simple">
+  <xsd:import namespace="http://test.com/schema/1/simple"
+ 				schemaLocation="http://test.com/schema/1/simple/simple.xsd" />
+  <xsd:annotation>
+		<xsd:appinfo>
+      <jxb:schemaBindings>
+        <jxb:package name="no.entitas.gradle.jaxb.samples.multiple.api2"/>
+      </jxb:schemaBindings>
+    </xsd:appinfo>
+	</xsd:annotation>
+	<xsd:complexType name="multipleType">
+		<xsd:sequence>
+			<xsd:element name="el1">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="name" type="xsd:string" />
+						<xsd:element name="date" type="xsd:date" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="el2">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="name" type="simple:simpleType" />
+						<xsd:element name="date" type="xsd:date" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
