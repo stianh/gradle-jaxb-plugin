@@ -46,6 +46,10 @@ Not many configuration options exists at the moment. You can configure
           compile '<other dependency which the generated classes need>'
         }
 
+* the package of the generated java classes
+
+		generateSchemaSource.destinationPackage = 'no.entitas.generated'
+		
 * the jaxb source directory sets
 
         sourceSets {

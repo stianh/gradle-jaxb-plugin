@@ -45,6 +45,8 @@ public class JaxbTask extends SourceTask {
     @OutputDirectory
     File outputDirectory
 
+	String destinationPackage = null;
+	
     @TaskAction
     def generate() {
         // TODO how to get to the task's SourceSetOutput which holds the resources dir
@@ -58,6 +60,10 @@ public class JaxbTask extends SourceTask {
 
         ant.xjc(extension: true, catalog: 'src/main/xsd/catalog.cat', destdir: outputDirectory, classpath: project.configurations.compile.asPath) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)
+			if(destinationPackage){
+				arg(value: '-p')
+				arg(value: destinationPackage)			
+			}
             arg(value: '-verbose')
             arg(value: '-episode')
             arg(value: "${metaInfDirectory}/sun-jaxb.episode")
