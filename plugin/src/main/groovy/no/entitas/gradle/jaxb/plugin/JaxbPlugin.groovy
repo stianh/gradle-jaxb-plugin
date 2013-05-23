@@ -32,7 +32,7 @@ public class JaxbPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply(JavaPlugin)
 
-        project.configurations.add('jaxb') {
+        project.configurations.create('jaxb') {
             visible = false
             transitive = false
             description = "The JAXB libraries to be used for this project."
@@ -42,7 +42,7 @@ public class JaxbPlugin implements Plugin<Project> {
             extendsFrom project.configurations.jaxb
         }
 
-        project.configurations.add('antextension') {
+        project.configurations.create('antextension') {
             visible = false
             transitive = false
             description = "The internal library containing the XJC Ant task extension."
@@ -75,7 +75,7 @@ public class JaxbPlugin implements Plugin<Project> {
     }
 
     private Task createJaxbTaskFor(SourceSet sourceSet, Project project) {
-        def jaxbTask = project.tasks.add(taskName(sourceSet), JaxbTask)
+        def jaxbTask = project.tasks.create(taskName(sourceSet), JaxbTask)
 
         jaxbTask.group = GENERATE_GROUP
         jaxbTask.description = "Generates code from the ${sourceSet.name} JAXB schemas."
