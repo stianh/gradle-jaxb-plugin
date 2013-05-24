@@ -45,6 +45,8 @@ public class JaxbTask extends SourceTask {
     @OutputDirectory
     File outputDirectory
 
+    String bindingDir = 'src/main/xjb'
+
     @TaskAction
     def generate() {
         // TODO how to get to the task's SourceSetOutput which holds the resources dir
@@ -56,11 +58,20 @@ public class JaxbTask extends SourceTask {
         // this in the jaxb configuration, which should only hold classpath necessary for running xjc
         ant.taskdef(name: 'xjc', classname: 'no.entitas.gradle.jaxb.antextension.XJCTask', classpath: xjcLibs.asPath)
 
-        ant.xjc(extension: true, catalog: 'src/main/xsd/catalog.cat', destdir: outputDirectory, classpath: project.configurations.compile.asPath) {
+        ant.xjc(extension: true, binding: absolute(bindingDir), catalog: 'src/main/xsd/catalog.cat', destdir: outputDirectory, classpath: project.configurations.compile.asPath) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)
             arg(value: '-verbose')
             arg(value: '-episode')
             arg(value: "${metaInfDirectory}/sun-jaxb.episode")
         }
+    }
+
+    private String absolute(final String binding) {
+        File bindingDir = project.file(binding)
+        String absoluteBindingDir = null;
+        if (bindingDir != null) {
+            absoluteBindingDir = bindingDir.absolutePath;
+        }
+        absoluteBindingDir
     }
 }
