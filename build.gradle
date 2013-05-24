@@ -95,7 +95,7 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         pom fixedProject
 
         beforeDeployment {
-            deployment -> signPom(deployment)
+            deployment -> signing.signPom(deployment)
         }
     }
 
@@ -104,7 +104,7 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         uniqueVersion = false
 
         beforeDeployment {
-            deployment -> signPom(deployment)
+            deployment -> signing.signPom(deployment)
         }
 
         if (!project.hasProperty('sonatypeUsername')) sonatypeUsername = ''
