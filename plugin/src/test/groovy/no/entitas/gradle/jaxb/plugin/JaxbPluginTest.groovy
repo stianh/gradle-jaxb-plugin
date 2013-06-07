@@ -37,22 +37,22 @@ class JaxbPluginTest extends Specification {
         test.resources.srcDirs == [project.file('src/test/xsd'), project.file('src/test/resources')] as Set
 
         when:
-        project.sourceSets.add('custom')
+        project.sourceSets.create('custom')
 
         then:
         def custom = project.sourceSets.custom
         custom.jaxb.srcDirs == [project.file('src/custom/xsd')] as Set
         custom.resources.srcDirs == [project.file('src/custom/xsd'), project.file('src/custom/resources')] as Set
     }
-    
+
     def "should add configuration named jaxb"() {
         when:
         plugin.apply(project)
-        
+
         then:
         project.configurations.jaxb
     }
-    
+
     def "should add JAXB generate task for each source set"() {
         when:
         plugin.apply(project)
@@ -67,11 +67,12 @@ class JaxbPluginTest extends Specification {
         project.tasks.compileTestJava.taskDependencies.getDependencies(null).contains(test)
 
         when:
-        project.sourceSets.add('custom')
+        project.sourceSets.create('custom')
 
         then:
         def custom = project.tasks.generateCustomSchemaSource
         custom instanceof JaxbTask
         project.tasks.compileCustomJava.taskDependencies.getDependencies(null).contains(custom)
     }
+
 }

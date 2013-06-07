@@ -26,10 +26,12 @@ import org.gradle.api.internal.file.FileResolver
  * @author Stig Kleppe-Jørgensen
  */
 class JaxbSourceDirectory {
+
     /**
      * All JAXB source for this source set
      */
     def SourceDirectorySet jaxb
+    def String bindings
 
     JaxbSourceDirectory(String parentDisplayName, FileResolver fileResolver) {
         jaxb = new DefaultSourceDirectorySet("${parentDisplayName} JAXB source", fileResolver)
@@ -44,6 +46,7 @@ class JaxbSourceDirectory {
      * @return this
      */
     JaxbSourceDirectory jaxb(Closure configuration) {
+        bindings = configuration.getProperty("bindings")
         configuration.delegate = jaxb
         configuration.call()
 
