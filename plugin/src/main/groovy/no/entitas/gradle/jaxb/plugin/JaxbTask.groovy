@@ -45,7 +45,22 @@ public class JaxbTask extends SourceTask {
     @OutputDirectory
     File outputDirectory
 
-    String bindingDir = 'src/main/xjb'
+    /**
+     * File or directory with binding definitions (usually *.xjb files).
+     * Default: src/${sourceSet.name}/xjb/*.xjb
+     */
+    def bindings = ""
+
+    /**
+     * Catalog file.
+     */
+    def catalog = ""
+
+    /**
+     * Specifying a target package via this command-line option overrides any binding customization for package name
+     * and the default package name algorithm defined in the specification.
+     */
+    def packageName = "";
 
     @TaskAction
     def generate() {
@@ -58,7 +73,13 @@ public class JaxbTask extends SourceTask {
         // this in the jaxb configuration, which should only hold classpath necessary for running xjc
         ant.taskdef(name: 'xjc', classname: 'no.entitas.gradle.jaxb.antextension.XJCTask', classpath: xjcLibs.asPath)
 
-        ant.xjc(extension: true, binding: absolute(bindingDir), catalog: 'src/main/xsd/catalog.cat', destdir: outputDirectory, classpath: project.configurations.compile.asPath) {
+        ant.xjc(
+                extension: true,
+                binding: bindings,
+                catalog: catalog,
+                destdir: outputDirectory,
+                packageName: packageName,
+                classpath: project.configurations.compile.asPath) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)
             arg(value: '-verbose')
             arg(value: '-episode')
@@ -66,12 +87,4 @@ public class JaxbTask extends SourceTask {
         }
     }
 
-    private String absolute(final String binding) {
-        File bindingDir = project.file(binding)
-        String absoluteBindingDir = null;
-        if (bindingDir != null) {
-            absoluteBindingDir = bindingDir.absolutePath;
-        }
-        absoluteBindingDir
-    }
 }
