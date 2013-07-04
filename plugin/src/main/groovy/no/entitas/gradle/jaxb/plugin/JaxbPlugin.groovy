@@ -27,7 +27,9 @@ import org.gradle.api.tasks.SourceSet
  * @author Stig Kleppe-Jørgensen
  */
 public class JaxbPlugin implements Plugin<Project> {
+
     private static final String GENERATE_GROUP = 'generate'
+    def bindings
 
     void apply(Project project) {
         project.plugins.apply(JavaPlugin)
@@ -86,6 +88,8 @@ public class JaxbPlugin implements Plugin<Project> {
             jaxbClassPath.transitive = true
             jaxbClassPath
         }
+        jaxbTask.bindings = "src/${sourceSet.name}/xjb"
+        jaxbTask.catalog = "src/${sourceSet.name}/xsd/catalog.cat"
 
         jaxbTask
     }
@@ -97,4 +101,5 @@ public class JaxbPlugin implements Plugin<Project> {
     private String taskName(SourceSet sourceSet) {
         return sourceSet.getTaskName('generate', 'SchemaSource')
     }
+
 }
