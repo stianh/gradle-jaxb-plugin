@@ -143,3 +143,7 @@ Known issues and limitations
   work properly, especially when having Java package specification in the schema files
 * The plugin is not tested extensively, especially with regards to different versions of the xjc compiler
 * There are several XJC ant task configurations that are not exposed through the plugin at the moment
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/stephanheinze/gradle-jaxb-plugin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
