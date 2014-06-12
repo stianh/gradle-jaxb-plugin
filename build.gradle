@@ -37,7 +37,7 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
         sign configurations.archives
     }
 
-    defaultProject = {
+    ext.defaultProject = {
         name 'Gradle JAXB plugin'
         // packaging 'jar' (Packaging is set later through direct modification of the xml)
         description 'The Gradle JAXB plugin creates Java classes from XSD schemas.'
@@ -81,7 +81,7 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
     }
 
 // TODO is this really needed? Think Sonatype do not have this as mandatory anymore
-    fixedProject = {
+    ext.fixedProject = {
         project defaultProject
         withXml {
             def project = it.asNode()
@@ -107,8 +107,8 @@ task integrationTest(type: GradleBuild, dependsOn: build) {
             deployment -> signing.signPom(deployment)
         }
 
-        if (!project.hasProperty('sonatypeUsername')) sonatypeUsername = ''
-        if (!project.hasProperty('sonatypePassword')) sonatypePassword = ''
+        if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = ''
+        if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = ''
 
         snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
             authentication(userName: sonatypeUsername, password: sonatypePassword)
