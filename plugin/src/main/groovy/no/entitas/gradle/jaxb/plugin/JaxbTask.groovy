@@ -81,7 +81,6 @@ public class JaxbTask extends SourceTask {
                 packageName: packageName,
                 classpath: project.configurations.compile.asPath) {
             source.addToAntBuilder(ant, 'schema', FileCollection.AntType.FileSet)
-            arg(value: '-verbose')
             arg(value: '-episode')
             arg(value: "${metaInfDirectory}/sun-jaxb.episode")
         }
