@@ -1,12 +1,12 @@
-Gradle JAXB plugin
-==================
+# This plugin is not maintained anymore; look at [jacobono's](https://github.com/jacobono/gradle-jaxb-plugin) instead.
+
+
+## Gradle JAXB plugin
 
 This is a Gradle plugin for generating JAXB classes with the xjc compiler from the given schemas. It also supports
 catalog and episode files for separate compilation.
 
-
-Usage
------
+### Usage
 
     apply plugin: 'jaxb'
 
